@@ -1,0 +1,431 @@
+/* ─── Base ─── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(196, 169, 98, 0.35);
+  color: #fafafa;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+/* ─── Site shell ─── */
+
+.archex-site {
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: "IBM Plex Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  background: #0a0a0b;
+  color: #fafafa;
+}
+
+.archex-site *,
+.archex-site *::before,
+.archex-site *::after {
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.archex-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 24px);
+}
+
+.archex-section-pad {
+  padding: clamp(64px, 10vw, 96px) 0;
+  border-top: 1px solid rgba(250, 250, 250, 0.07);
+}
+
+/* ─── Backgrounds ─── */
+
+.archex-diamond-grid {
+  background-color: #0a0a0b;
+  background-image:
+    linear-gradient(135deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 0, 14px -14px, 0 14px;
+}
+
+.archex-halo-ring {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 169, 98, 0.28);
+  background: radial-gradient(circle, rgba(196, 169, 98, 0.1) 0%, transparent 68%);
+}
+
+.archex-halo-ring::before {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 169, 98, 0.12);
+}
+
+.archex-halo-ring::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 169, 98, 0.06);
+}
+
+/* ─── Cards & clips ─── */
+
+.archex-cut-card {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  transition: border-color 0.45s var(--ease), transform 0.45s var(--ease);
+}
+
+@media (hover: hover) {
+  .archex-cut-card:hover { transform: translateY(-2px); }
+}
+
+/* ─── Buttons ─── */
+
+.archex-btn-orange {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, 2.5vw, 13px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0a0a0b;
+  background: #e8723a;
+  border: none;
+  padding: 12px 22px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: background 0.45s var(--ease);
+}
+
+.archex-btn-orange:hover { background: #f08850; }
+
+.archex-btn-orange:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.archex-btn-orange:disabled:hover { background: #e8723a; }
+
+.archex-btn-ghost {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a8a8ad;
+  background: transparent;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+  padding: 12px 18px;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: border-color 0.45s var(--ease), color 0.45s var(--ease);
+}
+
+.archex-btn-ghost:hover {
+  border-color: rgba(196, 169, 98, 0.4);
+  color: #c4a962;
+}
+
+.archex-btn-entry {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 2.8vw, 13px);
+  letter-spacing: 0.04em;
+  color: #fafafa;
+  background: #141416;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+  padding: 14px 20px;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+}
+
+.archex-btn-entry:hover {
+  border-color: rgba(196, 169, 98, 0.35);
+  background: rgba(196, 169, 98, 0.06);
+}
+
+/* ─── Nav ─── */
+
+.archex-nav-link {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #a8a8ad;
+  text-decoration: none;
+  transition: color 0.35s var(--ease);
+}
+
+.archex-nav-link:hover { color: #c4a962; }
+
+.archex-nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+  color: #fafafa;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.archex-nav-drawer {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px clamp(16px, 4vw, 24px) 16px;
+  border-top: 1px solid rgba(250, 250, 250, 0.07);
+  background: rgba(10, 10, 11, 0.98);
+}
+
+.archex-nav-drawer--open { display: flex; }
+
+.archex-nav-drawer .archex-nav-link {
+  padding: 12px 0;
+  font-size: 13px;
+}
+
+/* ─── Process ─── */
+
+.archex-process-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+
+.archex-process-step {
+  padding: clamp(16px, 3vw, 24px) clamp(12px, 2vw, 18px);
+  background: #141416;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+.archex-process-connector {
+  display: none;
+}
+
+/* ─── Project Estimator ─── */
+
+.archex-est-shell {
+  background: #141416;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+}
+
+.archex-est-progress {
+  height: 4px;
+  background: rgba(250, 250, 250, 0.06);
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 100%, 0 100%);
+  overflow: hidden;
+}
+
+.archex-est-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8a7344, #c4a962);
+  transition: width 0.65s var(--ease);
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 100%, 0 100%);
+}
+
+.archex-est-body { min-height: 280px; }
+
+.archex-est-step {
+  animation: archex-fade-in 0.55s var(--ease) both;
+}
+
+@keyframes archex-fade-in {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.archex-est-q {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(15px, 3.5vw, 17px);
+  color: #fafafa;
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+}
+
+.archex-est-field-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6e6e72;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.archex-est-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  background: #0a0a0b;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+}
+
+.archex-est-option:hover { border-color: rgba(196, 169, 98, 0.25); }
+
+.archex-est-option--active {
+  border-color: rgba(232, 114, 58, 0.55);
+  background: rgba(232, 114, 58, 0.08);
+}
+
+.archex-est-chip {
+  width: auto;
+  flex: 1 1 auto;
+  min-width: fit-content;
+  flex-direction: row;
+  padding: 10px 14px;
+}
+
+.archex-est-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(250, 250, 250, 0.07);
+}
+
+.archex-input {
+  width: 100%;
+  background: #0a0a0b;
+  border: 1px solid rgba(250, 250, 250, 0.07);
+  color: #fafafa;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.35s var(--ease);
+}
+
+.archex-input:focus { border-color: rgba(232, 114, 58, 0.5); }
+
+.archex-est-halo {
+  position: absolute;
+  width: min(200px, 60vw);
+  height: min(200px, 60vw);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(196, 169, 98, 0.2);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.archex-est-halo--pulse {
+  animation: archex-halo-pulse 1.2s var(--ease) forwards;
+}
+
+@keyframes archex-halo-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0; border-color: rgba(196, 169, 98, 0.5); }
+  40% { opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.35; border-color: rgba(196, 169, 98, 0.15); }
+}
+
+.archex-est-result { animation: archex-fade-in 0.65s var(--ease) both; }
+
+.archex-est-price {
+  word-break: break-word;
+  text-align: center;
+}
+
+/* ─── Service card header mobile ─── */
+
+.archex-service-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 1024px) {
+  .archex-process-flow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .archex-nav-desktop { display: none !important; }
+  .archex-nav-cta-desktop { display: none !important; }
+  .archex-nav-toggle { display: block; }
+
+  .archex-process-flow {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .archex-est-nav {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .archex-est-nav .archex-btn-orange,
+  .archex-est-nav .archex-btn-ghost {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .archex-cut-card {
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .archex-btn-orange,
+  .archex-btn-ghost {
+    width: 100%;
+  }
+}
+
+@media (min-width: 769px) {
+  .archex-nav-drawer { display: none !important; }
+}
+
+@media (min-width: 1280px) {
+  .archex-process-flow {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
