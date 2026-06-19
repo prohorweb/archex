@@ -32,14 +32,11 @@ Push this project to GitHub (e.g. `archex-site` or `portfolio-concept`).
 
 ### 2. Enable GitHub Pages
 
-Repository **Settings → Pages → Build and deployment**:
-
-- **Source:** Deploy from a branch
-- **Branch:** `gh-pages` / `/ (root)`
+Repository **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ### 3. Push to `main`
 
-The workflow builds the site and pushes `dist/` to the `gh-pages` branch.
+Workflow **Deploy to GitHub Pages** builds `dist/` and publishes via GitHub Actions.
 
 Site URL: `https://prohorweb.github.io/archex/`
 
