@@ -1,4 +1,19 @@
-/* ─── Base ─── */
+/* ─── ARCHEX — Futuristic Engineering Institute ─── */
+
+:root {
+  --ax-bg: #06070a;
+  --ax-surface: #0d1016;
+  --ax-elevated: #121722;
+  --ax-text: #f5f7fa;
+  --ax-text-secondary: #9ba4b2;
+  --ax-gold: #d6b36a;
+  --ax-gold-light: #f0d7a1;
+  --ax-orange: #d86a2d;
+  --ax-border: rgba(255, 255, 255, 0.08);
+  --ax-border-gold: rgba(214, 179, 106, 0.22);
+  --ax-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ax-ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 html {
   scroll-behavior: smooth;
@@ -8,6 +23,7 @@ html {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
@@ -18,8 +34,8 @@ body {
 }
 
 ::selection {
-  background: rgba(196, 169, 98, 0.35);
-  color: #fafafa;
+  background: rgba(214, 179, 106, 0.28);
+  color: #f5f7fa;
 }
 
 img, svg { display: block; max-width: 100%; }
@@ -27,13 +43,19 @@ img, svg { display: block; max-width: 100%; }
 /* ─── Site shell ─── */
 
 .archex-site {
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
-  background: #0a0a0b;
-  color: #fafafa;
+  background: var(--ax-bg);
+  color: var(--ax-text);
+  position: relative;
+}
+
+.archex-site-content {
+  position: relative;
+  z-index: 1;
 }
 
 .archex-site *,
@@ -45,242 +67,592 @@ img, svg { display: block; max-width: 100%; }
 
 .archex-container {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 clamp(16px, 4vw, 24px);
+  padding: 0 clamp(20px, 5vw, 48px);
+}
+
+.archex-container--narrow {
+  max-width: 760px;
 }
 
 .archex-section-pad {
-  padding: clamp(64px, 10vw, 96px) 0;
-  border-top: 1px solid rgba(250, 250, 250, 0.07);
+  padding: clamp(96px, 14vw, 160px) 0;
+  position: relative;
+  border-top: 1px solid var(--ax-border);
 }
 
-/* ─── Backgrounds ─── */
-
-.archex-diamond-grid {
-  background-color: #0a0a0b;
-  background-image:
-    linear-gradient(135deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%),
-    linear-gradient(225deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%),
-    linear-gradient(45deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%),
-    linear-gradient(315deg, rgba(250, 250, 250, 0.018) 25%, transparent 25%);
-  background-size: 28px 28px;
-  background-position: 0 0, 14px 0, 14px -14px, 0 14px;
+/* Opaque ↔ transparent — every other section (Services, Work = solid) */
+main > section.archex-section-pad:nth-child(2n) {
+  background: var(--ax-surface);
 }
 
-.archex-halo-ring {
+main > section.archex-section-pad:nth-child(2n + 1) {
+  background: rgba(13, 16, 22, 0.42);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.archex-section-pad::before {
+  content: "";
   position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(480px, 70vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(214, 179, 106, 0.12) 20%,
+    rgba(214, 179, 106, 0.4) 50%,
+    rgba(214, 179, 106, 0.12) 80%,
+    transparent 100%
+  );
   pointer-events: none;
-  border-radius: 50%;
-  border: 1px solid rgba(196, 169, 98, 0.28);
-  background: radial-gradient(circle, rgba(196, 169, 98, 0.1) 0%, transparent 68%);
 }
 
-.archex-halo-ring::before {
+.archex-section-pad .archex-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Architectural atmosphere ─── */
+
+.archex-atmosphere {
+  background-color: var(--ax-bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.archex-vignette {
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, transparent 0%, var(--ax-bg) 78%);
+}
+
+/* ─── Full-page parallax background ─── */
+
+.archex-parallax-root {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--ax-bg);
+}
+
+.archex-parallax-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.archex-parallax-layer--sky {
+  z-index: 1;
+}
+
+.archex-parallax-layer--far,
+.archex-parallax-layer--mid,
+.archex-parallax-layer--near {
+  inset: auto 0 0 0;
+  top: auto;
+  height: auto;
+}
+
+.archex-parallax-layer--far {
+  z-index: 2;
+  height: 48vh;
+  min-height: 280px;
+}
+
+.archex-parallax-layer--mid {
+  z-index: 3;
+  height: 56vh;
+  min-height: 340px;
+}
+
+.archex-parallax-layer--near {
+  z-index: 4;
+  height: 68vh;
+  min-height: 420px;
+}
+
+/* Hero halo — single anchor, perfect circles */
+.archex-hero-halo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.archex-hero-halo__anchor {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: min(640px, 92vmin);
+  height: min(640px, 92vmin);
+  transform: translate(-50%, -50%);
+}
+
+.archex-hero-halo__glow,
+.archex-hero-halo__spin {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.archex-hero-halo__glow {
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240, 215, 161, 0.14) 0%, transparent 68%);
+  filter: blur(36px);
+  animation: ax-halo-glow-pulse 8s var(--ax-ease) infinite alternate;
+}
+
+.archex-hero-halo__spin--a {
+  animation: ax-halo-spin 80s linear infinite;
+}
+
+.archex-hero-halo__spin--b {
+  animation: ax-halo-spin-reverse 110s linear infinite;
+}
+
+.archex-hero-halo__ring {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+}
+
+.archex-hero-halo__ring--primary {
+  width: 82%;
+  height: 82%;
+  border: 1px solid rgba(214, 179, 106, 0.32);
+  background: radial-gradient(
+    circle,
+    rgba(214, 179, 106, 0.08) 0%,
+    rgba(214, 179, 106, 0.02) 45%,
+    transparent 68%
+  );
+  box-shadow: 0 0 80px rgba(214, 179, 106, 0.06);
+}
+
+.archex-hero-halo__ring--primary::before {
   content: "";
   position: absolute;
-  inset: 18%;
+  inset: 16%;
   border-radius: 50%;
-  border: 1px solid rgba(196, 169, 98, 0.12);
+  border: 1px solid rgba(214, 179, 106, 0.14);
 }
 
-.archex-halo-ring::after {
+.archex-hero-halo__ring--secondary {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(214, 179, 106, 0.1);
+  opacity: 0.45;
+}
+
+.archex-hero-halo__ring--secondary::after {
   content: "";
   position: absolute;
-  inset: -12%;
+  inset: -6%;
   border-radius: 50%;
-  border: 1px solid rgba(196, 169, 98, 0.06);
+  border: 1px solid rgba(214, 179, 106, 0.06);
 }
 
-/* ─── Cards & clips ─── */
+.archex-hero-halo__ring {
+  position: relative;
+}
+
+/* Hero — no section border, transparent over parallax */
+.archex-hero {
+  background: transparent;
+  border-top: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archex-mountain-near,
+  .archex-parallax-grid,
+  .archex-hero-halo__glow,
+  .archex-hero-halo__spin--a,
+  .archex-hero-halo__spin--b {
+    animation: none !important;
+  }
+}
+
+/* ─── Halo system (estimator + sections) ─── */
+
+.archex-mountain-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.archex-mountain-near {
+  animation: ax-mountain-breathe 14s var(--ax-ease) infinite alternate;
+}
+
+@keyframes ax-mountain-breathe {
+  from { transform: translateY(0) scale(1); }
+  to { transform: translateY(-8px) scale(1.008); }
+}
+
+.archex-parallax-sky {
+  position: absolute;
+  inset: 0;
+}
+
+.archex-parallax-grid {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+  animation: ax-grid-drift 90s linear infinite;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 20%, transparent 75%);
+}
+
+@keyframes ax-grid-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(72px, 36px); }
+}
+
+.archex-parallax-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(214, 179, 106, 0.15) 30%,
+    rgba(214, 179, 106, 0.28) 50%,
+    rgba(214, 179, 106, 0.15) 70%,
+    transparent
+  );
+  opacity: 0.7;
+}
+
+@keyframes ax-halo-glow-pulse {
+  from { opacity: 0.6; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1.04); }
+}
+
+@keyframes ax-halo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ax-halo-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.archex-parallax-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 30%, transparent 0%, var(--ax-bg) 72%),
+    linear-gradient(180deg, transparent 0%, rgba(6, 7, 10, 0.4) 55%, var(--ax-bg) 100%);
+}
+
+/* Footer — solid, matches opaque sections */
+.archex-site-content > footer {
+  border-top: 1px solid var(--ax-border);
+  background: var(--ax-surface);
+  position: relative;
+}
+
+.archex-site-content > footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(480px, 70vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(214, 179, 106, 0.12) 20%,
+    rgba(214, 179, 106, 0.4) 50%,
+    rgba(214, 179, 106, 0.12) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ─── Section markers ─── */
+
+.archex-section-halo {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ax-gold);
+  box-shadow:
+    0 0 16px rgba(214, 179, 106, 0.55),
+    0 0 40px rgba(214, 179, 106, 0.12);
+  z-index: 2;
+}
+
+/* ─── Reveal motion ─── */
+
+.archex-reveal {
+  animation: archex-reveal 1.1s var(--ax-ease-reveal) both;
+}
+
+.archex-reveal-delay-1 { animation-delay: 0.12s; }
+.archex-reveal-delay-2 { animation-delay: 0.24s; }
+.archex-reveal-delay-3 { animation-delay: 0.36s; }
+
+@keyframes archex-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Cards ─── */
 
 .archex-cut-card {
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-  transition: border-color 0.45s var(--ease), transform 0.45s var(--ease);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  transition: border-color 0.5s var(--ax-ease), transform 0.5s var(--ax-ease);
 }
 
 @media (hover: hover) {
-  .archex-cut-card:hover { transform: translateY(-2px); }
+  .archex-cut-card:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.archex-card-accent {
+  position: relative;
+}
+
+.archex-card-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--ax-gold), transparent);
+  opacity: 0;
+  transition: opacity 0.5s var(--ax-ease);
+}
+
+@media (hover: hover) {
+  .archex-card-accent:hover::before { opacity: 1; }
 }
 
 /* ─── Buttons ─── */
 
-.archex-btn-orange {
-  font-family: "Barlow", sans-serif;
+.archex-btn-primary {
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 600;
-  font-size: clamp(11px, 2.5vw, 13px);
-  letter-spacing: 0.06em;
+  font-size: clamp(11px, 2.5vw, 12px);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0a0a0b;
-  background: #e8723a;
-  border: none;
-  padding: 12px 22px;
+  color: var(--ax-orange);
+  background: var(--ax-elevated);
+  border: 1px solid var(--ax-orange);
+  padding: 14px 28px;
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
   text-align: center;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  transition: background 0.45s var(--ease);
+  transition: background 0.45s var(--ax-ease), box-shadow 0.45s var(--ax-ease);
 }
 
-.archex-btn-orange:hover { background: #f08850; }
+.archex-btn-primary:hover {
+  background: rgba(216, 106, 45, 0.1);
+  box-shadow: 0 0 32px rgba(216, 106, 45, 0.12);
+}
 
-.archex-btn-orange:disabled {
-  opacity: 0.35;
+.archex-btn-primary:disabled {
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
-.archex-btn-orange:disabled:hover { background: #e8723a; }
+.archex-btn-primary:disabled:hover {
+  background: var(--ax-elevated);
+  box-shadow: none;
+}
 
 .archex-btn-ghost {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #a8a8ad;
+  color: var(--ax-text-secondary);
   background: transparent;
-  border: 1px solid rgba(250, 250, 250, 0.07);
-  padding: 12px 18px;
+  border: 1px solid var(--ax-border);
+  padding: 14px 22px;
   cursor: pointer;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  transition: border-color 0.45s var(--ease), color 0.45s var(--ease);
+  transition: border-color 0.45s var(--ax-ease), color 0.45s var(--ax-ease);
 }
 
 .archex-btn-ghost:hover {
-  border-color: rgba(196, 169, 98, 0.4);
-  color: #c4a962;
+  border-color: var(--ax-border-gold);
+  color: var(--ax-gold);
 }
 
 .archex-btn-entry {
-  font-family: "Barlow", sans-serif;
-  font-weight: 600;
-  font-size: clamp(12px, 2.8vw, 13px);
-  letter-spacing: 0.04em;
-  color: #fafafa;
-  background: #141416;
-  border: 1px solid rgba(250, 250, 250, 0.07);
-  padding: 14px 20px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  color: var(--ax-text);
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  padding: clamp(18px, 3vw, 24px) clamp(20px, 3vw, 28px);
   cursor: pointer;
   text-align: left;
   text-decoration: none;
   display: block;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: border-color 0.5s var(--ax-ease), background 0.5s var(--ax-ease);
 }
 
 .archex-btn-entry:hover {
-  border-color: rgba(196, 169, 98, 0.35);
-  background: rgba(196, 169, 98, 0.06);
+  border-color: var(--ax-border-gold);
+  background: rgba(214, 179, 106, 0.04);
 }
 
 /* ─── Nav ─── */
 
 .archex-nav-link {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: #a8a8ad;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ax-text-secondary);
   text-decoration: none;
-  transition: color 0.35s var(--ease);
+  transition: color 0.4s var(--ax-ease);
 }
 
-.archex-nav-link:hover { color: #c4a962; }
+.archex-nav-link:hover { color: var(--ax-gold); }
 
 .archex-nav-toggle {
   display: none;
-  background: transparent;
-  border: 1px solid rgba(250, 250, 250, 0.07);
-  color: #fafafa;
-  padding: 8px 12px;
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  color: var(--ax-text);
+  padding: 10px 14px;
   cursor: pointer;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
 }
 
 .archex-nav-drawer {
   display: none;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px clamp(16px, 4vw, 24px) 16px;
-  border-top: 1px solid rgba(250, 250, 250, 0.07);
-  background: rgba(10, 10, 11, 0.98);
+  gap: 2px;
+  padding: 16px clamp(20px, 5vw, 48px) 24px;
+  border-top: 1px solid var(--ax-border);
+  background: rgba(6, 7, 10, 0.98);
 }
 
 .archex-nav-drawer--open { display: flex; }
 
 .archex-nav-drawer .archex-nav-link {
-  padding: 12px 0;
-  font-size: 13px;
+  padding: 14px 0;
+  font-size: 12px;
 }
 
-/* ─── Process ─── */
+/* ─── Process pipeline ─── */
 
 .archex-process-flow {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0;
+  position: relative;
 }
 
 .archex-process-step {
-  padding: clamp(16px, 3vw, 24px) clamp(12px, 2vw, 18px);
-  background: #141416;
-  border: 1px solid rgba(250, 250, 250, 0.07);
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  padding: clamp(24px, 4vw, 32px) clamp(16px, 2.5vw, 24px);
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  position: relative;
 }
 
-.archex-process-connector {
-  display: none;
+.archex-process-step::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ax-gold), transparent);
+  opacity: 0;
+  transition: opacity 0.5s var(--ax-ease);
+}
+
+@media (hover: hover) {
+  .archex-process-step:hover::after { opacity: 0.6; }
 }
 
 /* ─── Project Estimator ─── */
 
 .archex-est-shell {
-  background: #141416;
-  border: 1px solid rgba(250, 250, 250, 0.07);
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
 }
 
 .archex-est-progress {
-  height: 4px;
-  background: rgba(250, 250, 250, 0.06);
-  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 100%, 0 100%);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.04);
   overflow: hidden;
 }
 
 .archex-est-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #8a7344, #c4a962);
-  transition: width 0.65s var(--ease);
-  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 100%, 0 100%);
+  background: linear-gradient(90deg, rgba(214, 179, 106, 0.5), var(--ax-gold));
+  transition: width 0.8s var(--ax-ease);
 }
 
-.archex-est-body { min-height: 280px; }
+.archex-est-body { min-height: 300px; }
 
 .archex-est-step {
-  animation: archex-fade-in 0.55s var(--ease) both;
+  animation: archex-step-in 0.65s var(--ax-ease-reveal) both;
 }
 
-@keyframes archex-fade-in {
-  from { opacity: 0; transform: translateX(10px); }
-  to { opacity: 1; transform: translateX(0); }
+@keyframes archex-step-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .archex-est-q {
-  font-family: "Barlow", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 600;
-  font-size: clamp(15px, 3.5vw, 17px);
-  color: #fafafa;
-  margin: 0 0 20px;
-  letter-spacing: -0.01em;
+  font-size: clamp(16px, 3.5vw, 20px);
+  color: var(--ax-text);
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
 }
 
 .archex-est-field-label {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 10px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #6e6e72;
-  margin-bottom: 10px;
+  color: var(--ax-text-secondary);
+  margin-bottom: 12px;
   display: block;
 }
 
@@ -289,20 +661,20 @@ img, svg { display: block; max-width: 100%; }
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px 18px;
   text-align: left;
   cursor: pointer;
-  background: #0a0a0b;
-  border: 1px solid rgba(250, 250, 250, 0.07);
+  background: var(--ax-bg);
+  border: 1px solid var(--ax-border);
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-  transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+  transition: border-color 0.45s var(--ax-ease), background 0.45s var(--ax-ease);
 }
 
-.archex-est-option:hover { border-color: rgba(196, 169, 98, 0.25); }
+.archex-est-option:hover { border-color: var(--ax-border-gold); }
 
 .archex-est-option--active {
-  border-color: rgba(232, 114, 58, 0.55);
-  background: rgba(232, 114, 58, 0.08);
+  border-color: rgba(216, 106, 45, 0.5);
+  background: rgba(216, 106, 45, 0.06);
 }
 
 .archex-est-chip {
@@ -310,73 +682,109 @@ img, svg { display: block; max-width: 100%; }
   flex: 1 1 auto;
   min-width: fit-content;
   flex-direction: row;
-  padding: 10px 14px;
+  padding: 11px 16px;
 }
 
 .archex-est-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(250, 250, 250, 0.07);
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ax-border);
 }
 
 .archex-input {
   width: 100%;
-  background: #0a0a0b;
-  border: 1px solid rgba(250, 250, 250, 0.07);
-  color: #fafafa;
-  font-family: "IBM Plex Mono", monospace;
+  background: var(--ax-bg);
+  border: 1px solid var(--ax-border);
+  color: var(--ax-text);
+  font-family: "JetBrains Mono", monospace;
   font-size: 13px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   outline: none;
-  transition: border-color 0.35s var(--ease);
+  transition: border-color 0.4s var(--ax-ease);
 }
 
-.archex-input:focus { border-color: rgba(232, 114, 58, 0.5); }
+.archex-input:focus { border-color: rgba(216, 106, 45, 0.45); }
 
 .archex-est-halo {
   position: absolute;
-  width: min(200px, 60vw);
-  height: min(200px, 60vw);
+  width: min(220px, 65vw);
+  height: min(220px, 65vw);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 1px solid rgba(196, 169, 98, 0.2);
+  border: 1px solid rgba(214, 179, 106, 0.28);
   pointer-events: none;
-  opacity: 0.6;
+  box-shadow: 0 0 60px rgba(214, 179, 106, 0.08);
 }
 
 .archex-est-halo--pulse {
-  animation: archex-halo-pulse 1.2s var(--ease) forwards;
+  animation: archex-halo-pulse 1.4s var(--ax-ease) forwards;
 }
 
 @keyframes archex-halo-pulse {
-  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0; border-color: rgba(196, 169, 98, 0.5); }
-  40% { opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.35; border-color: rgba(196, 169, 98, 0.15); }
+  0% { transform: translate(-50%, -50%) scale(0.88); opacity: 0; border-color: rgba(214, 179, 106, 0.5); }
+  35% { opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.06); opacity: 0.4; border-color: rgba(214, 179, 106, 0.12); }
 }
 
-.archex-est-result { animation: archex-fade-in 0.65s var(--ease) both; }
+.archex-est-result { animation: archex-step-in 0.8s var(--ax-ease-reveal) both; }
 
 .archex-est-price {
   word-break: break-word;
   text-align: center;
 }
 
-/* ─── Service card header mobile ─── */
+/* ─── Typography helpers ─── */
+
+.archex-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ax-gold);
+}
+
+.archex-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--ax-text);
+}
+
+.archex-body {
+  font-family: "Inter", sans-serif;
+  line-height: 1.7;
+  color: var(--ax-text-secondary);
+}
+
+.archex-mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* ─── Service card header ─── */
 
 .archex-service-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
+}
+
+/* ─── Metric badge ─── */
+
+.archex-metric {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  color: var(--ax-gold-light);
 }
 
 /* ─── Responsive ─── */
@@ -403,6 +811,7 @@ img, svg { display: block; max-width: 100%; }
     align-items: stretch;
   }
 
+  .archex-est-nav .archex-btn-primary,
   .archex-est-nav .archex-btn-orange,
   .archex-est-nav .archex-btn-ghost {
     width: 100%;
@@ -414,6 +823,7 @@ img, svg { display: block; max-width: 100%; }
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
 
+  .archex-btn-primary,
   .archex-btn-orange,
   .archex-btn-ghost {
     width: 100%;
@@ -428,4 +838,38 @@ img, svg { display: block; max-width: 100%; }
   .archex-process-flow {
     grid-template-columns: repeat(5, 1fr);
   }
+}
+
+/* Fix: archex-btn-orange must mirror primary (composes not valid in plain CSS) */
+.archex-btn-orange {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, 2.5vw, 12px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ax-orange);
+  background: var(--ax-elevated);
+  border: 1px solid var(--ax-orange);
+  padding: 14px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: background 0.45s var(--ax-ease), box-shadow 0.45s var(--ax-ease);
+}
+
+.archex-btn-orange:hover {
+  background: rgba(216, 106, 45, 0.1);
+  box-shadow: 0 0 32px rgba(216, 106, 45, 0.12);
+}
+
+.archex-btn-orange:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.archex-btn-orange:disabled:hover {
+  background: var(--ax-elevated);
+  box-shadow: none;
 }

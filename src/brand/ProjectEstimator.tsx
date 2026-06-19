@@ -178,22 +178,21 @@ export default function ProjectEstimator() {
   const shellPad = { padding: "0 clamp(16px, 4vw, 24px)" };
 
   return (
-    <section id="estimator" className="archex-section-pad" style={{ background: AX.elevated }}>
-      <div className="archex-container" style={{ maxWidth: 720 }}>
-        <div style={{ fontFamily: TYPO.mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: AX.gold, marginBottom: 12 }}>
-          // PROJECT.ESTIMATOR
-        </div>
-        <h2 style={{ fontFamily: TYPO.display, fontWeight: 700, fontSize: "clamp(22px, 4vw, 32px)", letterSpacing: "-0.02em", color: AX.white, margin: "0 0 12px" }}>
+    <section id="estimator" className="archex-section-pad">
+      <div className="archex-section-halo" aria-hidden />
+      <div className="archex-container archex-container--narrow">
+        <div className="archex-label" style={{ marginBottom: 20 }}>04 · Project estimator</div>
+        <h2 className="archex-heading" style={{ fontSize: "clamp(26px, 4vw, 38px)", margin: "0 0 16px" }}>
           Scope your engagement
         </h2>
-        <p style={{ fontFamily: TYPO.mono, fontSize: "clamp(12px, 2.5vw, 13px)", lineHeight: 1.65, color: AX.whiteMuted, margin: "0 0 clamp(24px, 4vw, 32px)" }}>
-          Diagnostic tool — not a sales form. Answer three questions. Get a product recommendation and range.
+        <p className="archex-body" style={{ fontSize: "clamp(14px, 2.5vw, 15px)", margin: "0 0 clamp(32px, 5vw, 48px)" }}>
+          Diagnostic tool — not a sales form. Three questions. A product recommendation and scope range.
         </p>
 
         <div className="archex-est-shell archex-cut-card">
           <div style={{ ...shellPad, paddingTop: 20, paddingBottom: 8 }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <span style={{ fontFamily: TYPO.mono, fontSize: 10, color: AX.metal, letterSpacing: "0.1em" }}>
+              <span className="archex-mono" style={{ fontSize: 10, color: AX.textSecondary, letterSpacing: "0.12em" }}>
                 {showContact ? "CONTACT" : step >= 4 ? "RESULT" : `STEP ${step} / 3`}
               </span>
               {!showContact && step < 4 && (
@@ -208,8 +207,8 @@ export default function ProjectEstimator() {
               <div key="contact" className="archex-est-step">
                 {submitted ? (
                   <div style={{ textAlign: "center", padding: "32px 0" }}>
-                    <div style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 18, color: AX.white, marginBottom: 8 }}>Brief received</div>
-                    <p style={{ fontFamily: TYPO.mono, fontSize: 12, color: AX.whiteMuted }}>We respond within one business day with scope questions — not a deck.</p>
+                    <div style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 18, color: AX.text, marginBottom: 8 }}>Brief received</div>
+                    <p style={{ fontFamily: TYPO.mono, fontSize: 12, color: AX.textMuted }}>We respond within one business day with scope questions — not a deck.</p>
                   </div>
                 ) : (
                   <>
@@ -247,8 +246,8 @@ export default function ProjectEstimator() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {NEED_OPTIONS.map((o) => (
                     <OptionBtn key={o.id} active={state.need === o.id} onClick={() => setState((s) => ({ ...s, need: o.id }))}>
-                      <span style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 14, color: AX.white }}>{o.label}</span>
-                      <span style={{ fontFamily: TYPO.mono, fontSize: 11, color: AX.metalLight, marginTop: 2 }}>{o.sub}</span>
+                      <span style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 14, color: AX.text }}>{o.label}</span>
+                      <span style={{ fontFamily: TYPO.mono, fontSize: 11, color: AX.textSecondary, marginTop: 2 }}>{o.sub}</span>
                     </OptionBtn>
                   ))}
                 </div>
@@ -279,8 +278,8 @@ export default function ProjectEstimator() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 8 }}>
                   {COMPLEXITY_OPTIONS.map((o) => (
                     <OptionBtn key={o.id} active={state.complexity === o.id} onClick={() => setState((s) => ({ ...s, complexity: o.id }))}>
-                      <span style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 13, color: AX.white }}>{o.label}</span>
-                      <span style={{ fontFamily: TYPO.mono, fontSize: 10, color: AX.metalLight }}>{o.desc}</span>
+                      <span style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 13, color: AX.text }}>{o.label}</span>
+                      <span style={{ fontFamily: TYPO.mono, fontSize: 10, color: AX.textSecondary }}>{o.desc}</span>
                     </OptionBtn>
                   ))}
                 </div>
@@ -295,8 +294,8 @@ export default function ProjectEstimator() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {START_OPTIONS.map((o) => (
                     <OptionBtn key={o.id} active={state.startingPoint === o.id} onClick={() => setState((s) => ({ ...s, startingPoint: o.id }))}>
-                      <span style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 14, color: AX.white }}>{o.label}</span>
-                      <span style={{ fontFamily: TYPO.mono, fontSize: 11, color: AX.metalLight, marginTop: 2 }}>{o.sub}</span>
+                      <span style={{ fontFamily: TYPO.display, fontWeight: 600, fontSize: 14, color: AX.text }}>{o.label}</span>
+                      <span style={{ fontFamily: TYPO.mono, fontSize: 11, color: AX.textSecondary, marginTop: 2 }}>{o.sub}</span>
                     </OptionBtn>
                   ))}
                 </div>
@@ -308,16 +307,16 @@ export default function ProjectEstimator() {
             ) : estimate ? (
               <div key="result" className="archex-est-step archex-est-result">
                 <div className="archex-est-field-label" style={{ color: AX.gold }}>Recommended entry</div>
-                <div style={{ fontFamily: TYPO.display, fontWeight: 700, fontSize: "clamp(18px, 4vw, 22px)", color: AX.white, marginBottom: 24 }}>{estimate.product}</div>
+                <div style={{ fontFamily: TYPO.display, fontWeight: 700, fontSize: "clamp(18px, 4vw, 22px)", color: AX.text, marginBottom: 24 }}>{estimate.product}</div>
                 <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", padding: "24px 0", marginBottom: 24 }}>
                   <div className={`archex-est-halo ${haloPulse ? "archex-est-halo--pulse" : ""}`} />
-                  <div style={{ fontFamily: TYPO.mono, fontSize: 10, letterSpacing: "0.12em", color: AX.metal, marginBottom: 8, position: "relative" }}>ESTIMATED RANGE</div>
+                  <div className="archex-mono" style={{ fontSize: 10, letterSpacing: "0.12em", color: AX.textSecondary, marginBottom: 8, position: "relative" }}>ESTIMATED RANGE</div>
                   <div className="archex-est-price" style={{ fontFamily: TYPO.display, fontWeight: 700, fontSize: "clamp(24px, 5vw, 38px)", color: AX.gold, letterSpacing: "-0.02em", position: "relative" }}>
                     {fmt(estimate.priceMin)} – {fmt(estimate.priceMax)}
                   </div>
-                  <div style={{ fontFamily: TYPO.mono, fontSize: 12, color: AX.whiteMuted, marginTop: 10, position: "relative" }}>{estimate.timelineLabel}</div>
+                  <div style={{ fontFamily: TYPO.mono, fontSize: 12, color: AX.textMuted, marginTop: 10, position: "relative" }}>{estimate.timelineLabel}</div>
                 </div>
-                <p style={{ fontFamily: TYPO.mono, fontSize: 11, lineHeight: 1.6, color: AX.metalLight, margin: "0 0 24px" }}>
+                <p style={{ fontFamily: TYPO.mono, fontSize: 11, lineHeight: 1.6, color: AX.textSecondary, margin: "0 0 24px" }}>
                   Orientation only. Final scope and fixed quote confirmed after a 30-minute discovery call.
                 </p>
                 <div className="archex-est-nav">

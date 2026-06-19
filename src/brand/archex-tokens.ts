@@ -1,22 +1,23 @@
-/** ARCHEX design tokens */
+/** ARCHEX design tokens — Devs × Koenigsegg visual language */
 export const AX = {
-  base: "#0A0A0B",
-  elevated: "#141416",
-  surface: "#1C1C1F",
-  white: "#FAFAFA",
-  whiteMuted: "#A8A8AD",
-  gold: "#C4A962",
-  goldHalo: "rgba(196, 169, 98, 0.14)",
-  goldRing: "rgba(196, 169, 98, 0.32)",
-  goldSurface: "rgba(196, 169, 98, 0.08)",
-  orange: "#E8723A",
-  orangeBright: "#F08850",
-  metal: "#6E6E72",
-  metalLight: "#9A9A9F",
-  gridStrong: "rgba(250, 250, 250, 0.07)",
+  bg: "#06070A",
+  surface: "#0D1016",
+  elevated: "#121722",
+  text: "#F5F7FA",
+  textSecondary: "#9BA4B2",
+  gold: "#D6B36A",
+  goldLight: "#F0D7A1",
+  goldHalo: "rgba(214, 179, 106, 0.12)",
+  goldRing: "rgba(214, 179, 106, 0.32)",
+  goldSurface: "rgba(214, 179, 106, 0.06)",
+  orange: "#D86A2D",
+  orangeGlow: "rgba(216, 106, 45, 0.18)",
+  border: "rgba(255, 255, 255, 0.08)",
+  borderGold: "rgba(214, 179, 106, 0.22)",
 } as const;
 
 export const TYPO = {
-  display: '"Barlow", sans-serif',
-  mono: '"IBM Plex Mono", monospace',
+  display: '"Space Grotesk", sans-serif',
+  body: '"Inter", sans-serif',
+  mono: '"JetBrains Mono", monospace',
 } as const;
